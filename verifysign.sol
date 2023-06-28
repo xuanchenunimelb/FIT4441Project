@@ -1,0 +1,9 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.0;
+
+contract Recover {
+  function ecr (bytes32 msgh, uint8 v, bytes32 r, bytes32 s) public pure
+  returns (address sender) {
+    return ecrecover(msgh, v, r, s);
+  }
+}

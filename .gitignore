@@ -1,0 +1,7 @@
+# Json files
+.json
+.txt
+
+/venv/
+/.vscode/
+/__pycache__/
