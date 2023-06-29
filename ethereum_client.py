@@ -72,8 +72,8 @@ class EthereumDBclient:
         return decoded_data
 
     def sign_proof(self, proof):
-        msg = Web3.solidity_keccak(['string'], [proof])
-        message = encode_defunct(hexstr=msg.hex())
+        # msg = Web3.solidity_keccak(['string'], [proof])
+        message = encode_defunct(hexstr=proof.hex())
         # message = encode_defunct(text=proof)
         signed_message = w3.eth.account.sign_message(message, private_key=account_private_key)
         return_val = {}

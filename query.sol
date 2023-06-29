@@ -55,10 +55,10 @@ contract Query
 
         for (uint i = 0; i < c_; i++) {
             string memory proofString = string(abi.encodePacked("c=", toString(i + 1), "?op=", toString(op[i]), "?id=", toString(id[i])));
-            strings[i] = proofString;
+            // strings[i] = proofString;
             bool duplicate = false;
-            bytes32 message = keccak256(abi.encodePacked(proofString));
-            bytes32 prefixedHashMessage = keccak256(abi.encodePacked('\x19Ethereum Signed Message:\n32', message));
+            // bytes32 message = keccak256(abi.encodePacked(proofString));
+            bytes32 prefixedHashMessage = keccak256(abi.encodePacked('\x19Ethereum Signed Message:\n', bytes(proofString).length, proofString));
             // HashMessage = bytes32ToString(prefixedHashMessage);
             address recover_address = ecr(prefixedHashMessage, v[i], r[i], s[i]);
             recover_addresses[i] = recover_address;
