@@ -2,6 +2,11 @@
 .json
 .txt
 
+pyvenv.cfg
+
 /venv/
+/lib/
+/Scripts/
+/Include/
 /.vscode/
 /__pycache__/
