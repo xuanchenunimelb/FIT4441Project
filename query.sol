@@ -55,10 +55,10 @@ contract Query
 
         for (uint i = 0; i < c_; i++) {
             string memory proofString = string(abi.encodePacked("c=", toString(i + 1), "?op=", toString(op[i]), "?id=", toString(id[i])));
-            // strings[i] = proofString;
+            strings[i] = proofString;
             bool duplicate = false;
             // bytes32 message = keccak256(abi.encodePacked(proofString));
-            bytes32 prefixedHashMessage = keccak256(abi.encodePacked('\x19Ethereum Signed Message:\n', bytes(proofString).length, proofString));
+            bytes32 prefixedHashMessage = keccak256(abi.encodePacked('\x19Ethereum Signed Message:\n', uint2str(bytes(proofString).length), proofString));
             // HashMessage = bytes32ToString(prefixedHashMessage);
             address recover_address = ecr(prefixedHashMessage, v[i], r[i], s[i]);
             recover_addresses[i] = recover_address;
@@ -100,6 +100,28 @@ contract Query
         return (strings, validity, results, recover_addresses);
     }
 
+    function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
+        if (_i == 0) {
+            return "0";
+        }
+        uint j = _i;
+        uint len;
+        while (j != 0) {
+            len++;
+            j /= 10;
+        }
+        bytes memory bstr = new bytes(len);
+        uint k = len;
+        while (_i != 0) {
+            k = k-1;
+            uint8 temp = (48 + uint8(_i - _i / 10 * 10));
+            bytes1 b1 = bytes1(temp);
+            bstr[k] = b1;
+            _i /= 10;
+        }
+        return string(bstr);
+    }
+
     function deleteElement(uint32[] memory array, uint index) internal pure {
         if (index >= array.length) return;
 
@@ -132,13 +154,13 @@ contract Query
     //     return string(buffer);
     // }
 
-    function char(uint8 b) internal pure returns (bytes1 c) {
-        if (b < 10) {
-            return bytes1(b + 48);
-        } else {
-            return bytes1(b + 87);
-        }
-    }
+    // function char(uint8 b) internal pure returns (bytes1 c) {
+    //     if (b < 10) {
+    //         return bytes1(b + 48);
+    //     } else {
+    //         return bytes1(b + 87);
+    //     }
+    // }
 
 
     function ecr (bytes32 msgh, uint8 v_, bytes32 r_, bytes32 s_) public pure
