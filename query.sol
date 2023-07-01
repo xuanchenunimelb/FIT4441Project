@@ -41,7 +41,7 @@ contract Query
 
     //     return (proofString, recover_address);
     // }
-    function get_c() public view returns (string[] memory strings, bool validity, uint32[] memory results, address[] memory recover_addresses) {
+    function get_r() public view returns (string[] memory strings, bool validity, uint32[] memory results, address[] memory recover_addresses) {
         validity = true;
         uint c_ = c;
         uint32[] memory tempResults = new uint32[](c_);

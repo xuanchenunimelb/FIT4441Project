@@ -26,14 +26,21 @@ class Client:
 
     def query(self, w):
 
+        # PRF 1 sw ← F1(ks, w)
+        cipher = AES.new(k_s, AES.MODE_CTR, nonce = nonce_s)
+        sw = cipher.encrypt(w.encode())
+        # make it 128 bits
+        h = MD5.new(sw)
+        sw = h.digest()
+
         # c is the counter for the keyword
         c = 0
         try:
             counter = json.load( open( "counter.json" ) )
 
             # check if keyword is in counter
-            if w in counter:
-                c = counter[w]
+            if sw.hex() in counter:
+                c = counter[sw.hex()]
             # if not, return
             else:
                 print("no such keyword")
@@ -44,12 +51,6 @@ class Client:
             print("no counter file")
             return False
 
-        # PRF 1 sw ← F1(ks, w)
-        cipher = AES.new(k_s, AES.MODE_CTR, nonce = nonce_s)
-        sw = cipher.encrypt(w.encode())
-        # make it 128 bits
-        h = MD5.new(sw)
-        sw = h.digest()
 
 
         # PRF 2 st ← F2(kt, w||c)
@@ -77,27 +78,6 @@ class Client:
         
     def update(self, op, w, id):
 
-        # c is the counter for the keyword
-        c = 0
-        try:
-            counter = json.load( open( "counter.json" ) )
-
-            # check if keyword is in counter
-            if w in counter:
-                c = counter[w]
-            # if not, c = 0
-        
-        # no counter file, create new file
-        except:
-            print("no counter file")
-            counters = {}
-            counters[w] = 0
-            # Serialize data into file:
-            json.dump( counters, open( "counter.json", 'w' ) )
-
-        c = c + 1
-
-
         # PRF 1 sw ← F1(ks, w)
         cipher = AES.new(k_s, AES.MODE_CTR, nonce = nonce_s)
         sw = cipher.encrypt(w.encode())
@@ -105,6 +85,28 @@ class Client:
         h = MD5.new(sw)
         sw = h.digest()
 
+        # c is the counter for the keyword
+        c = 0
+
+        try:
+            counter = json.load( open( "counter.json" ) )
+
+            # check if keyword is in counter
+            if sw.hex() in counter:
+                c = counter[sw.hex()]
+            # if not, c = 0
+        
+        # no counter file, create new file
+        except:
+            print("no counter file")
+            counters = {}
+            counters[sw.hex()] = 0
+            # Serialize data into file:
+            json.dump( counters, open( "counter.json", 'w' ) )
+
+        
+        c = c + 1
+        
         # print("sw: ", sw)
         # print("sw len: ", len(sw))
 
@@ -225,7 +227,8 @@ class Client:
         
 
         # store the counter to file
+        
         counter = json.load( open( "counter.json" ) )
-        counter[w] = c
+        counter[sw.hex()] = c
         json.dump( counter, open( "counter.json", 'w' ) )
         return True

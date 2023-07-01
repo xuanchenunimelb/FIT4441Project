@@ -177,4 +177,4 @@ class EthereumDBclient:
         # Create the contract in Python
         query = w3.eth.contract(address=sc_address, abi=abi)
 
-        print(query.functions.get_c().call())
+        print(query.functions.get_r().call())
