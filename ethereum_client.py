@@ -178,3 +178,103 @@ class EthereumDBclient:
         query = w3.eth.contract(address=sc_address, abi=abi)
 
         print(query.functions.get_r().call())
+
+    def init_counter_blockchain(self):
+        with open("counter.sol", "r") as file:
+            counter_file = file.read()
+
+        install_solc("0.8.17")
+
+        compiled_sol = compile_standard(
+            {
+                "language": "Solidity",
+                "sources": {"Counter.sol": {"content": counter_file}},
+                "settings": {
+                    "outputSelection": {
+                        "*": {
+                            "*": [
+                                "abi",
+                                "metadata",
+                                "evm.bytecode",
+                                "evm.bytecode.sourceMap",
+                            ]  # output needed to interact with and deploy contract
+                        }
+                    }
+                },
+            },
+            solc_version="0.8.17",
+        )
+
+        with open("compiler_output_couter.json", "w") as file:
+            json.dump(compiled_sol, file)
+
+        # get bytecode
+        bytecode = compiled_sol["contracts"]["Counter.sol"]["Counter"]["evm"][
+            "bytecode"
+        ]["object"]
+
+        # get abi
+        abi = json.loads(
+            compiled_sol["contracts"]["Counter.sol"]["Counter"]["metadata"]
+        )["output"]["abi"]
+
+        # Create the contract in Python
+        Counter = w3.eth.contract(abi=abi, bytecode=bytecode)
+        # Get the latest transaction
+        nonce = w3.eth.get_transaction_count(account_address)
+        # build transaction
+        transaction = Counter.constructor().build_transaction(
+            {"chainId": w3.eth.chain_id, "gasPrice": w3.eth.gas_price, "from": account_address, "nonce": nonce}
+        )
+        # Sign the transaction
+        sign_transaction = w3.eth.account.sign_transaction(transaction, private_key=account_private_key)
+        print("Deploying Contract!")
+        # Send the transaction
+        transaction_hash = w3.eth.send_raw_transaction(sign_transaction.rawTransaction)
+        # Wait for the transaction to be mined, and get the transaction receipt
+        print("Waiting for transaction to finish...")
+        transaction_receipt = w3.eth.wait_for_transaction_receipt(transaction_hash)
+        print(f"Done! Contract deployed to {transaction_receipt.contractAddress}")
+
+
+        return transaction_receipt.contractAddress
+
+    def get_c(self, sc_address, key):
+        try:
+            compiled_sol = json.load( open( "compiler_output_couter.json" ) )
+        except:
+            print("no compiler_output_couter file")
+
+        # get abi
+        abi = json.loads(
+            compiled_sol["contracts"]["Counter.sol"]["Counter"]["metadata"]
+        )["output"]["abi"]
+
+        # Create the contract in Python
+        counter = w3.eth.contract(address=sc_address, abi=abi)
+        print("getting with eth, address, key, c",sc_address,key)
+        c = counter.functions.get(key).call()
+        print("C returned! c= ",c)
+        return c
+    
+    def set_c(self, sc_address, key, c):
+        try:
+            compiled_sol = json.load( open( "compiler_output_couter.json" ) )
+        except:
+            print("no compiler_output_couter file")
+
+        # get abi
+        abi = json.loads(
+            compiled_sol["contracts"]["Counter.sol"]["Counter"]["metadata"]
+        )["output"]["abi"]
+
+        # Create the contract in Python
+        counter = w3.eth.contract(address=sc_address, abi=abi)
+
+        # print("setting with eth, address, key, c",sc_address,key, c)
+        # print("set_c:",counter.functions.set(key, c).call())
+        print("Sending transaction to set(255)\n")
+        tx_hash = counter.functions.set(key,c).transact({'from': account_address})
+        receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+        print("Transaction receipt mined:")
+        print(receipt)

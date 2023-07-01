@@ -35,20 +35,31 @@ class Client:
 
         # c is the counter for the keyword
         c = 0
+        # try:
+        #     counter = json.load( open( "counter.json" ) )
+
+        #     # check if keyword is in counter
+        #     if sw.hex() in counter:
+        #         c = counter[sw.hex()]
+        #     # if not, return
+        #     else:
+        #         print("no such keyword")
+        #         return False
+        
+        # # no counter file, create new file
+        # except:
+        #     print("no counter file")
+        #     return False
         try:
-            counter = json.load( open( "counter.json" ) )
+            counter = json.load( open( "countersc.json" ) )
 
             # check if keyword is in counter
-            if sw.hex() in counter:
-                c = counter[sw.hex()]
-            # if not, return
-            else:
-                print("no such keyword")
-                return False
+            c = self.DB.getSCcounter(counter, sw.hex())
+            # if not, c = 0
         
         # no counter file, create new file
         except:
-            print("no counter file")
+            print("no countersc file")
             return False
 
 
@@ -88,21 +99,37 @@ class Client:
         # c is the counter for the keyword
         c = 0
 
+        # try:
+        #     counter = json.load( open( "counter.json" ) )
+
+        #     # check if keyword is in counter
+        #     if sw.hex() in counter:
+        #         c = counter[sw.hex()]
+        #     # if not, c = 0
+        
+        # # no counter file, create new file
+        # except:
+        #     print("no counter file")
+        #     counters = {}
+        #     counters[sw.hex()] = 0
+        #     # Serialize data into file:
+        #     json.dump( counters, open( "counter.json", 'w' ) )
+
         try:
-            counter = json.load( open( "counter.json" ) )
+            counter = json.load( open( "countersc.json" ) )
 
             # check if keyword is in counter
-            if sw.hex() in counter:
-                c = counter[sw.hex()]
+            
             # if not, c = 0
         
         # no counter file, create new file
         except:
-            print("no counter file")
-            counters = {}
-            counters[sw.hex()] = 0
+            print("no countersc file")
+            counter = self.DB.createSCcounter()
             # Serialize data into file:
-            json.dump( counters, open( "counter.json", 'w' ) )
+            json.dump( counter, open( "countersc.json", 'w' ) )
+
+        c = self.DB.getSCcounter(counter, sw.hex())
 
         
         c = c + 1
@@ -228,7 +255,9 @@ class Client:
 
         # store the counter to file
         
-        counter = json.load( open( "counter.json" ) )
-        counter[sw.hex()] = c
-        json.dump( counter, open( "counter.json", 'w' ) )
+        # counter = json.load( open( "counter.json" ) )
+        # counter[sw.hex()] = c
+        # json.dump( counter, open( "counter.json", 'w' ) )
+        self.DB.setSCcounter(counter, sw.hex(), c)
+        
         return True

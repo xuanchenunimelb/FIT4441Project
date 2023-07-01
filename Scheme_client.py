@@ -88,3 +88,12 @@ class BlockchainDBclient:
     
     def sign(self, proof):
         return self.DB.sign_proof(proof)
+
+    def createSCcounter(self):
+        return self.DB.init_counter_blockchain()
+
+    def setSCcounter(self,sc_address, key, c):
+        return self.DB.set_c(sc_address, key, c)
+
+    def getSCcounter(self,sc_address, key):
+        return self.DB.get_c(sc_address, key)
