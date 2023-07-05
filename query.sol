@@ -3,14 +3,14 @@ pragma solidity ^0.8.17;
 
 contract Query
 {
-    uint c;
+    uint private c;
     address public client;
-    address node;
-    uint8[] op;
-    uint32[] id;
-    uint8[] v;
-    bytes32[] r;
-    bytes32[] s;
+    address public node;
+    uint8[] private op;
+    uint32[] private id;
+    uint8[] private v;
+    bytes32[] private r;
+    bytes32[] private s;
 
     constructor(uint counter) {
         client = msg.sender;

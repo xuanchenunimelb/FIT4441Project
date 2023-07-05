@@ -10,6 +10,7 @@ pip install pycryptodome
 pip install cryptography
 pip install eth-account
 pip install py-solc-x
+pip install python-secrets
 
 
 

@@ -3,6 +3,7 @@ from eth_account.messages import encode_defunct
 from time import sleep
 from solcx import compile_standard, install_solc
 import json
+import secrets
 
 ganache_url = "HTTP://127.0.0.1:7545"
 account_address = "0x89356f84A449f8E58d07A3ccF3d92DA57538284c"
@@ -273,8 +274,13 @@ class EthereumDBclient:
 
         # print("setting with eth, address, key, c",sc_address,key, c)
         # print("set_c:",counter.functions.set(key, c).call())
+
+        r = secrets.token_bytes(32) 
+
+        hashedkey = Web3.solidity_keccak(['string','bytes32'], [key, r])
+
         print("Sending transaction to set(255)\n")
-        tx_hash = counter.functions.set(key,c).transact({'from': account_address})
+        tx_hash = counter.functions.set(hashedkey, r, c).transact({'from': account_address})
         receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
         print("Transaction receipt mined:")
         print(receipt)
