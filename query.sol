@@ -3,6 +3,8 @@ pragma solidity ^0.8.17;
 
 contract Query
 {
+    bool private unverified;
+    uint public remuneration;
     uint private c;
     address public client;
     address public node;
@@ -12,9 +14,15 @@ contract Query
     bytes32[] private r;
     bytes32[] private s;
 
-    constructor(uint counter) {
+    bool private validity_;
+    uint32[] private results_;
+
+    constructor(uint counter) payable {
+        require(msg.value > 0, "Remuneration must be greater than 0.");
+        remuneration = msg.value;
         client = msg.sender;
         c = counter;
+        unverified = true;
     }
     function upload_result(uint8[] memory ops, uint32[] memory ids,uint8[] memory vs, bytes32[] memory rs, bytes32[] memory ss) public{
         node = msg.sender;
@@ -41,7 +49,12 @@ contract Query
 
     //     return (proofString, recover_address);
     // }
-    function get_r() public view returns (string[] memory strings, bool validity, uint32[] memory results, address[] memory recover_addresses) {
+    function get_r() public view returns (bool v, uint32[] memory r){
+        return(validity_, results_);
+    }
+    
+    function verify() public returns (string[] memory strings, bool validity, uint32[] memory results, address[] memory recover_addresses, address node_) {
+        require(unverified, "already verified");
         validity = true;
         uint c_ = c;
         uint32[] memory tempResults = new uint32[](c_);
@@ -97,7 +110,25 @@ contract Query
             results[i] = tempResults[i];
         }
 
-        return (strings, validity, results, recover_addresses);
+        // payable(node).transfer(address(this).balance);
+        if(validity){
+            payable(node).transfer(remuneration);
+            // (bool sent, bytes memory data) = payable(node).call{value: address(this).balance}("");
+            // require(sent, "Failed to send Ether");
+        }else{
+            payable(client).transfer(remuneration);
+        }
+
+        unverified = false;
+
+        validity_ = validity;
+        results_ = results;
+
+        return (strings, validity, results, recover_addresses, node);
+    }
+
+    function transfereth() public {
+        payable(node).transfer(address(this).balance);
     }
 
     function uint2str(uint _i) internal pure returns (string memory _uintAsString) {

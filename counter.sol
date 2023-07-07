@@ -9,10 +9,10 @@ contract Counter {
 
   function get(string memory key)
   public view
-  returns (uint32 value)
+  returns (uint32 c)
   {
     for (uint32 i = 0; i < RClength; i++) {
-        bytes32 r = R[RClength - i];
+        bytes32 r = R[RClength - i - 1];
         bytes32 hashedkey = keccak256(abi.encodePacked(key,r));
         if(storeC[hashedkey] > 0){
             return storeC[hashedkey];

@@ -63,7 +63,7 @@ class EthereumDBnode:
         # print("vs:", vs)
         # print("rs:", rs)
         # print("ss:", ss)
-        print("Sending transaction to upload_result(255)\n")
+        print("Sending transaction to upload_result()\n")
         tx_hash = query.functions.upload_result(ops, ids, vs, rs, ss).transact({'from': node_account_address})
         receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
         print("Transaction receipt mined:")

@@ -134,7 +134,7 @@ class EthereumDBclient:
         nonce = w3.eth.get_transaction_count(account_address)
         # build transaction
         transaction = Query.constructor(c).build_transaction(
-            {"chainId": w3.eth.chain_id, "gasPrice": w3.eth.gas_price, "from": account_address, "nonce": nonce}
+            {"chainId": w3.eth.chain_id, "gasPrice": w3.eth.gas_price, "from": account_address, "nonce": nonce, "value": Web3.to_wei(0.01, 'ether')}
         )
         # Sign the transaction
         sign_transaction = w3.eth.account.sign_transaction(transaction, private_key=account_private_key)
@@ -178,7 +178,33 @@ class EthereumDBclient:
         # Create the contract in Python
         query = w3.eth.contract(address=sc_address, abi=abi)
 
+        # print(query.functions.get_r().call())
+        print("Sending transaction to verify()\n")
+        tx_hash = query.functions.verify().transact({'from': account_address})
+        receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+        print("Transaction receipt mined:")
+        print(receipt)
+
+    def call_sc_r(self, sc_address):
+        try:
+            compiled_sol = json.load( open( "compiler_output.json" ) )
+        except:
+            print("no compiler_output file")
+
+        # get abi
+        abi = json.loads(
+            compiled_sol["contracts"]["Query.sol"]["Query"]["metadata"]
+        )["output"]["abi"]
+
+        # Create the contract in Python
+        query = w3.eth.contract(address=sc_address, abi=abi)
+
         print(query.functions.get_r().call())
+        # print("Sending transaction to verify()\n")
+        # tx_hash = query.functions.verify().transact({'from': account_address})
+        # receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+        # print("Transaction receipt mined:")
+        # print(receipt)
 
     def init_counter_blockchain(self):
         with open("counter.sol", "r") as file:
@@ -253,9 +279,9 @@ class EthereumDBclient:
 
         # Create the contract in Python
         counter = w3.eth.contract(address=sc_address, abi=abi)
-        print("getting with eth, address, key, c",sc_address,key)
+        # print("getting with eth, address, key, c",sc_address,key)
         c = counter.functions.get(key).call()
-        print("C returned! c= ",c)
+        # print("C returned! c= ",c)
         return c
     
     def set_c(self, sc_address, key, c):
@@ -279,7 +305,7 @@ class EthereumDBclient:
 
         hashedkey = Web3.solidity_keccak(['string','bytes32'], [key, r])
 
-        print("Sending transaction to set(255)\n")
+        print("Sending transaction to set()\n")
         tx_hash = counter.functions.set(hashedkey, r, c).transact({'from': account_address})
         receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
         print("Transaction receipt mined:")

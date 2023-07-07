@@ -10,9 +10,13 @@
 
 # print(stripped_string)
 
-import secrets
+# import secrets
 
-token2 = secrets.token_bytes(32) 
+# token2 = secrets.token_bytes(32) 
 
-print(token2) 
-print(len(token2))
+# print(token2) 
+# print(len(token2))
+from web3 import Web3, HTTPProvider
+ganache_url = "HTTP://127.0.0.1:7545"
+w3 = Web3(Web3.HTTPProvider(ganache_url))
+print(w3.eth.get_balance("0x6fCe5a8549d9ee44ab8C53D2c7F6b10feFB4B772"))

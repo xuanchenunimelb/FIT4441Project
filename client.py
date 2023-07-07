@@ -84,6 +84,7 @@ class Client:
 
     def getqueryresult(self, sc_address):
         self.DB.callSC(sc_address)
+        self.DB.callSCR(sc_address)
         
 
         

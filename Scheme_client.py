@@ -19,6 +19,12 @@ class BlockchainDBclient:
     def callSC(self, sc_address):
         self.DB.call_sc(sc_address)
 
+    def callSCR(self, sc_address):
+        self.DB.call_sc_r(sc_address)
+        
+    def resultSC(self, sc_address):
+        self.DB.result_sc(sc_address)
+
     def load_from_file(self):
         try:
             self.root = json.load( open( "root.json" ) )
