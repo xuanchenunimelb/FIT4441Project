@@ -30,8 +30,14 @@ class BlockchainDBnode:
     def query(self, key):
         vals = []
         root = self.root
+        decoded_msg_dict = {}
         while root != None:
-            decoded_msg = self.DB.get_decoded_msg(root)
+            if root in decoded_msg_dict:
+                decoded_msg = decoded_msg_dict[root]
+            else:
+                decoded_msg = self.DB.get_decoded_msg(root)
+                decoded_msg_dict[root] = decoded_msg
+            
             decoded_data = {}
             # for param in decoded_msg.split("?"):
             #     data = param.split('=')

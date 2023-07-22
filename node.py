@@ -119,5 +119,5 @@ class Node:
             # oldst = h.digest()
             # print ("The oldst is: ", oldst)
         
-        # TODO send to sc
+        # send to sc
         DB.sendToSC(sc_address, ops, ids, vs, rs, ss)
