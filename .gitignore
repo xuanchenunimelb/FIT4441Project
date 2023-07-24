@@ -4,6 +4,7 @@
 
 pyvenv.cfg
 
+/json/
 /venv/
 /lib/
 /Scripts/

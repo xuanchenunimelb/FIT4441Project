@@ -30,7 +30,7 @@ class EthereumDBnode:
 
     def send_to_sc(self, sc_address, ops, ids, vs, rs, ss):
         try:
-            compiled_sol = json.load( open( "compiler_output.json" ) )
+            compiled_sol = json.load( open( "json/compiler_output.json" ) )
         except:
             print("no compiler_output file")
 

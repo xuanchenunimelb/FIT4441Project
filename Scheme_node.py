@@ -15,12 +15,12 @@ class BlockchainDBnode:
 
     def load_from_file(self):
         try:
-            self.root = json.load( open( "root.json" ) )
+            self.root = json.load( open( "json/root.json" ) )
         except:
             print("no root file")
 
     def save_to_file(self):
-        json.dump( self.root, open( "root.json", 'w' ) )
+        json.dump( self.root, open( "json/root.json", 'w' ) )
 
 
     def getDBhash():

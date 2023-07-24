@@ -26,7 +26,7 @@ class Node:
     def query(self, sc_address):
         query = {}
         try:
-            query = json.load( open( "query.json" ) )
+            query = json.load( open( "json/query.json" ) )
 
         # no counter file, create new file
         except:

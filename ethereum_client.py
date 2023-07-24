@@ -115,7 +115,7 @@ class EthereumDBclient:
             solc_version="0.8.17",
         )
 
-        with open("compiler_output.json", "w") as file:
+        with open("json/compiler_output.json", "w") as file:
             json.dump(compiled_sol, file)
 
         # get bytecode
@@ -166,7 +166,7 @@ class EthereumDBclient:
 
     def call_sc(self, sc_address):
         try:
-            compiled_sol = json.load( open( "compiler_output.json" ) )
+            compiled_sol = json.load( open( "json/compiler_output.json" ) )
         except:
             print("no compiler_output file")
 
@@ -187,7 +187,7 @@ class EthereumDBclient:
 
     def call_sc_r(self, sc_address):
         try:
-            compiled_sol = json.load( open( "compiler_output.json" ) )
+            compiled_sol = json.load( open( "json/compiler_output.json" ) )
         except:
             print("no compiler_output file")
 
@@ -232,7 +232,7 @@ class EthereumDBclient:
             solc_version="0.8.17",
         )
 
-        with open("compiler_output_couter.json", "w") as file:
+        with open("json/compiler_output_couter.json", "w") as file:
             json.dump(compiled_sol, file)
 
         # get bytecode
@@ -268,7 +268,7 @@ class EthereumDBclient:
 
     def get_c(self, sc_address, key):
         try:
-            compiled_sol = json.load( open( "compiler_output_couter.json" ) )
+            compiled_sol = json.load( open( "json/compiler_output_couter.json" ) )
         except:
             print("no compiler_output_couter file")
 
@@ -286,7 +286,7 @@ class EthereumDBclient:
     
     def set_c(self, sc_address, key, c):
         try:
-            compiled_sol = json.load( open( "compiler_output_couter.json" ) )
+            compiled_sol = json.load( open( "json/compiler_output_couter.json" ) )
         except:
             print("no compiler_output_couter file")
 

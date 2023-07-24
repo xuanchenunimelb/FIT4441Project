@@ -51,7 +51,7 @@ class Client:
         #     print("no counter file")
         #     return False
         try:
-            counter = json.load( open( "countersc.json" ) )
+            counter = json.load( open( "json/countersc.json" ) )
 
             # check if keyword is in counter
             c = self.DB.getSCcounter(counter, sw.hex())
@@ -77,7 +77,7 @@ class Client:
         # print("sw",sw)
         message = {"sw":base58.b58encode(sw).decode(),"st": base58.b58encode(st).decode(),"c": c}
         # print("message", message)
-        json.dump( message, open( "query.json", 'w' ) )
+        json.dump( message, open( "json/query.json", 'w' ) )
 
         # smart contract
         return self.DB.createSC(c)
@@ -117,7 +117,7 @@ class Client:
         #     json.dump( counters, open( "counter.json", 'w' ) )
 
         try:
-            counter = json.load( open( "countersc.json" ) )
+            counter = json.load( open( "json/countersc.json" ) )
 
             # check if keyword is in counter
             
@@ -128,7 +128,7 @@ class Client:
             print("no countersc file")
             counter = self.DB.createSCcounter()
             # Serialize data into file:
-            json.dump( counter, open( "countersc.json", 'w' ) )
+            json.dump( counter, open( "json/countersc.json", 'w' ) )
 
         c = self.DB.getSCcounter(counter, sw.hex())
 
