@@ -91,6 +91,7 @@ class Node:
             st = concated[:16]
             # print("st: ", st)
             # print("concated[16:]: ", concated[16:].decode())
+            # opid = concated[16:].decode()
             opid = concated[16:].decode().lstrip('0')
             # print("here! ", opid)
             opid = opid.split("?")

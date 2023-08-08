@@ -248,7 +248,7 @@ class Client:
         vals.append(str(message_data["signed_message"]))
         # print("vals: ", vals)
         # print(base58.b58encode(ut))
-        self.DB.update(base58.b58encode(ut).decode(), vals)
+        cost1 = self.DB.update(base58.b58encode(ut).decode(), vals)
         self.DB.save_to_file()
         # print(self.DB.root)
 
@@ -259,6 +259,8 @@ class Client:
         # counter = json.load( open( "counter.json" ) )
         # counter[sw.hex()] = c
         # json.dump( counter, open( "counter.json", 'w' ) )
-        self.DB.setSCcounter(counter, sw.hex(), c)
+        cost2 = self.DB.setSCcounter(counter, sw.hex(), c)
+
+        cost = cost1 + cost2
         
-        return True
+        return cost

@@ -16,7 +16,9 @@
 
 # print(token2) 
 # print(len(token2))
-from web3 import Web3, HTTPProvider
-ganache_url = "HTTP://127.0.0.1:7545"
-w3 = Web3(Web3.HTTPProvider(ganache_url))
-print(w3.eth.get_balance("0x6fCe5a8549d9ee44ab8C53D2c7F6b10feFB4B772"))
+# from web3 import Web3, HTTPProvider
+# ganache_url = "HTTP://127.0.0.1:7545"
+# w3 = Web3(Web3.HTTPProvider(ganache_url))
+# print(w3.eth.get_balance("0x6fCe5a8549d9ee44ab8C53D2c7F6b10feFB4B772"))
+import hmac
+hmac.new(b'chen', digestmod='MD5').digest()

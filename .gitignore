@@ -7,6 +7,7 @@ pyvenv.cfg
 /json/
 /venv/
 /lib/
+/share/
 /Scripts/
 /Include/
 /.vscode/

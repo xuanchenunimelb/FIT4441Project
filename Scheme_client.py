@@ -17,7 +17,7 @@ class BlockchainDBclient:
         return self.DB.send_sc_to_blockchain(c)
 
     def callSC(self, sc_address):
-        self.DB.call_sc(sc_address)
+        return self.DB.call_sc(sc_address)
 
     def callSCR(self, sc_address):
         self.DB.call_sc_r(sc_address)

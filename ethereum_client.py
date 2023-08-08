@@ -6,8 +6,8 @@ import json
 import secrets
 
 ganache_url = "HTTP://127.0.0.1:7545"
-account_address = "0x89356f84A449f8E58d07A3ccF3d92DA57538284c"
-account_private_key = "0x7c8db4ed6bd1fc1bc7587bcb8354fe043deee25b825793c23314b5ce63357957"
+account_address = "0x55Db9586e73f042557d2DD36193347DEaC3Cd0e7"
+account_private_key = "0x557c948245ecec932c51a8c5b4ff9d1009c7561c6ff02d7e171ba880d86feb74"
 
 w3 = Web3(Web3.HTTPProvider(ganache_url))
 def to_32byte_hex(val):
@@ -184,6 +184,7 @@ class EthereumDBclient:
         receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
         print("Transaction receipt mined:")
         print(receipt)
+        return(receipt['gasUsed'])
 
     def call_sc_r(self, sc_address):
         try:
@@ -310,3 +311,4 @@ class EthereumDBclient:
         receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
         print("Transaction receipt mined:")
         print(receipt)
+        return(receipt['gasUsed'])
