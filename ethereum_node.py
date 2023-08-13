@@ -4,7 +4,7 @@ import json
 
 ganache_url = "HTTP://127.0.0.1:7545"
 # account_address = "0x89356f84A449f8E58d07A3ccF3d92DA57538284c"
-node_account_address = "0xACe4BA6F9D1137EcFF28Da041495ce7DC2B2Fb2F"
+node_account_address = "0x02082a62441bC43aeb23350a570929486Ea14594"
 
 w3 = Web3(Web3.HTTPProvider(ganache_url))
 
@@ -69,7 +69,7 @@ class EthereumDBnode:
         print("Transaction receipt mined:")
         print(receipt)
 
-        return True
+        return receipt['gasUsed']
     
     
 

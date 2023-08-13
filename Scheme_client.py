@@ -54,7 +54,7 @@ class BlockchainDBclient:
         
         msg = root + "?" + key + "?" + val_str
 
-        print("msg: ", msg)
+        # print("msg: ", msg)
 
 
         tx_hash, cost = self.DB.send_msg_to_blockchain(msg)

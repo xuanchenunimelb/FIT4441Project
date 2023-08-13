@@ -121,4 +121,4 @@ class Node:
             # print ("The oldst is: ", oldst)
         
         # send to sc
-        DB.sendToSC(sc_address, ops, ids, vs, rs, ss)
+        return DB.sendToSC(sc_address, ops, ids, vs, rs, ss)

@@ -1,6 +1,6 @@
 # Json files
 *.json
-*.txt
+# *.txt
 
 pyvenv.cfg
 

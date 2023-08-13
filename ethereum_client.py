@@ -6,8 +6,8 @@ import json
 import secrets
 
 ganache_url = "HTTP://127.0.0.1:7545"
-account_address = "0x55Db9586e73f042557d2DD36193347DEaC3Cd0e7"
-account_private_key = "0x557c948245ecec932c51a8c5b4ff9d1009c7561c6ff02d7e171ba880d86feb74"
+account_address = "0xE5dded7323a81D066B28A8E6102EF9170037480A"
+account_private_key = "0x05459eacbca0de299f3826d4f0d9743d4b653fcca1490af5742c27485e0038a9"
 
 w3 = Web3(Web3.HTTPProvider(ganache_url))
 def to_32byte_hex(val):
@@ -43,7 +43,7 @@ class EthereumDBclient:
                 sleep(20)
         tx_data = self.await_transaction_receipt(sent_tx)
         hash = tx_data['transactionHash']
-        print("Message successfully sent. Hash: ", hash.hex())
+        # print("Message successfully sent. Hash: ", hash.hex())
         return hash.hex(), tx_data['gasUsed']
 
 
@@ -162,7 +162,7 @@ class EthereumDBclient:
 
         # print(query.functions.retrieve().call())
 
-        return transaction_receipt.contractAddress
+        return transaction_receipt.contractAddress, transaction_receipt['gasUsed']
 
     def call_sc(self, sc_address):
         try:
@@ -280,9 +280,9 @@ class EthereumDBclient:
 
         # Create the contract in Python
         counter = w3.eth.contract(address=sc_address, abi=abi)
-        # print("getting with eth, address, key, c",sc_address,key)
+
         c = counter.functions.get(key).call()
-        # print("C returned! c= ",c)
+
         return c
     
     def set_c(self, sc_address, key, c):
@@ -299,16 +299,13 @@ class EthereumDBclient:
         # Create the contract in Python
         counter = w3.eth.contract(address=sc_address, abi=abi)
 
-        # print("setting with eth, address, key, c",sc_address,key, c)
-        # print("set_c:",counter.functions.set(key, c).call())
-
         r = secrets.token_bytes(32) 
 
         hashedkey = Web3.solidity_keccak(['string','bytes32'], [key, r])
 
-        print("Sending transaction to set()\n")
+        # print("Sending transaction to set()\n")
         tx_hash = counter.functions.set(hashedkey, r, c).transact({'from': account_address})
         receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
-        print("Transaction receipt mined:")
-        print(receipt)
+        # print("Transaction receipt mined:")
+        # print(receipt)
         return(receipt['gasUsed'])
