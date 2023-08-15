@@ -58,9 +58,6 @@ for kw in Kw_File_Use:
     # break
 
 
-# update_cost_gas += client.update("1", "cat", "111")
-# update_cost_gas += client.update("1", "cat", "1111")
-
 end= datetime.datetime.now()
 t = end - start
 print('update_cost_time', t)
@@ -84,9 +81,3 @@ print('search_design_cost_time', t)
 print('search_design_client_gas', search_client_cost_gas)
 print('search_design_server_gas', search_server_cost_gas)
 
-# sc_address = client.query("cat")
-# json.dump( sc_address, open( "json/sc_address.json", 'w' ) )
-# sc_address = json.load( open( "json/sc_address.json" ) )
-# node = Node()
-# node.query(sc_address)
-# client.getqueryresult(sc_address)

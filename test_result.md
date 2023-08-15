@@ -1,3 +1,6 @@
+MNEMONIC ?
+mistake layer cross initial empty sign flower chalk snap runway trim coach
+
 number of kw:  1305
 the number of pairs 2547
 
@@ -34,3 +37,7 @@ AttributeDict({'transactionHash': HexBytes('0x978c8834ecfdd7de7358987645d1b1be2f
 search_design_cost_time 0:00:43.286054
 search_design_client_gas 1908248
 search_design_server_gas 440601
+
+client storage cost 3*42 bits (three eth address)
+server storage cost 0
+on chain storage cost 436 per kw-id pair (40.43% lower)
