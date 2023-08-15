@@ -6,12 +6,10 @@ the number of pairs 2547
 
 client running...
 Ethereum network connected:  True
-Current block #: 46
-no countersc file
 Deploying Contract!
 Waiting for transaction to finish...
 Done! Contract deployed to 0x0616fBbA8f1E3Ac41adD2192f8904D6ffDc2Ec4e
-no root file
+
 
 update_cost_time 1:45:19.917180
 update_cost_gas 259993047
@@ -24,7 +22,7 @@ Waiting for transaction to finish...
 Done! Contract deployed to 0xcFB072D4FB4bD770C8C0553538257E1E1FDd5FEe
 node running...
 Ethereum network connected:  True
-Current block #: 5150
+Current block #: 5104
 Sending transaction to upload_result()
 
 Transaction receipt mined:
