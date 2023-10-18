@@ -5,7 +5,7 @@ from base64 import b64encode, b64decode
 from Crypto.Cipher import AES
 from Crypto.Hash import SHA256, MD5
 import base58
-
+import datetime
 
 nonce_s = "0".encode()
 nonce_t = "1".encode()
@@ -24,6 +24,7 @@ class Node:
         print("node running...")
     
     def query(self, sc_address):
+        start = datetime.datetime.now()
         query = {}
         try:
             query = json.load( open( "json/query.json" ) )
@@ -56,6 +57,7 @@ class Node:
         # get all records
         i = c
         # print("i",i)
+        
         while (i > 0):
             # HASH 1 ut ← H1(sw||st)
 
@@ -121,4 +123,7 @@ class Node:
             # print ("The oldst is: ", oldst)
         
         # send to sc
+        end= datetime.datetime.now()
+        t = end - start
+        print('search_design_cost_time', t)
         return DB.sendToSC(sc_address, ops, ids, vs, rs, ss)

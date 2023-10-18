@@ -40,12 +40,15 @@ for file in file_to_file:
 # print(Kw_File_Use['chen400'][1])
 
 
+client = Client()
+###upload
+
 start = datetime.datetime.now()
 
 
 
 update_cost_gas = 0
-client = Client()
+
 for kw in Kw_File_Use:
     # print(Kw_File_Use[kw])
     for i in range(len(Kw_File_Use[kw])):
@@ -63,6 +66,7 @@ t = end - start
 print('update_cost_time', t)
 print('update_cost_gas', update_cost_gas)
 
+###
 
 search_client_cost_gas = 0
 search_server_cost_gas = 0
@@ -77,7 +81,7 @@ client.getqueryresult(sc_address)
 
 end= datetime.datetime.now()
 t = end - start
-print('search_design_cost_time', t)
+print('search_and verify_design_cost_time', t)
 print('search_design_client_gas', search_client_cost_gas)
 print('search_design_server_gas', search_server_cost_gas)
 

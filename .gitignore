@@ -1,6 +1,14 @@
 # Json files
 *.json
-# *.txt
+*.txt
+
+test_result.md
+search_verify_result.md
+searchTime.py
+dynamic_test.py
+
+1.py
+5047.py
 
 pyvenv.cfg
 

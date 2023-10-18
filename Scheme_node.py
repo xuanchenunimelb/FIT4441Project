@@ -30,7 +30,11 @@ class BlockchainDBnode:
     def query(self, key):
         vals = []
         root = self.root
+
+        ## decoded_msg_dict to be global
         decoded_msg_dict = {}
+
+
         while root != None:
             if root in decoded_msg_dict:
                 decoded_msg = decoded_msg_dict[root]

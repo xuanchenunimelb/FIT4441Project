@@ -50,17 +50,15 @@ class Client:
         # except:
         #     print("no counter file")
         #     return False
-        try:
-            counter = json.load( open( "json/countersc.json" ) )
-
+        counter = json.load( open( "json/countersc.json" ) )
             # check if keyword is in counter
-            c = self.DB.getSCcounter(counter, sw.hex())
+        c = self.DB.getSCcounter(counter, sw.hex())
             # if not, c = 0
         
         # no counter file, create new file
-        except:
-            print("no countersc file")
-            return False
+        # except:
+        #     print("no countersc file")
+        #     return False
 
 
 
