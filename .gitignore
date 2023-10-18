@@ -6,12 +6,20 @@ test_result.md
 search_verify_result.md
 searchTime.py
 dynamic_test.py
+old_client.py
+old_client.py
+old_update.py
 
 1.py
 5047.py
+b58.py
+aes.py
+sign.py
 
 pyvenv.cfg
 
+/CompareModel/
+/temp/
 /json/
 /venv/
 /lib/
