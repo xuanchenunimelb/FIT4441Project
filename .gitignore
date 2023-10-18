@@ -2,12 +2,8 @@
 *.json
 *.txt
 
-
-
 pyvenv.cfg
 
-/CompareModel/
-/temp/
 /json/
 /venv/
 /lib/
